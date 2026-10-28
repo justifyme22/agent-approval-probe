@@ -1,0 +1,19 @@
+name: Agent Approval Check
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: read
+  statuses: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: anthropics/claude-code-action/agent-approval-check@8041f1d17e0e7d2f2cfe35002962e9f26237c0bb
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          exempt_path_prefixes: "docs"
+          required_approvals: "2"
